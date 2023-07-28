@@ -14,11 +14,10 @@ type SpeechQueue = {
   url: Promise<HTMLAudioElement>;
 };
 const Chat = () => {
-  /** Simulate a hook fetching the data */
   const [latestMessage, setLatestMessage] = React.useState<Message | null>(
     null,
   );
-  // const [speechQueue, setSpeechQueue] = React.useState<string[]>([]);
+  const [transcript, setTranscript] = React.useState('t');
   const [speechQueue, setSpeechQueue] = React.useState<SpeechQueue[]>([]);
   const [speechQueueIndex, setSpeechQueueIndex] = React.useState(0);
   const [isSpeaking, setIsSpeaking] = React.useState(false);
@@ -140,12 +139,13 @@ const Chat = () => {
           setCustomPersonality={setCustomPersonality}
           setCustomVoice={setCustomVoice}
         />
-        <ChatContent messages={messages} />
+        <ChatContent messages={messages} transcript={transcript} />
         <ChatInputBox
           sendANewMessage={sendANewMessage}
           isLoading={isLoading}
           latestMessage={latestMessage}
           completedSpeaking={completedSpeaking}
+          setTranscript={setTranscript}
         />
       </div>
     </div>

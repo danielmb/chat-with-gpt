@@ -9,6 +9,7 @@ import { CreateMessage, Message } from 'ai/react';
 
 interface ChatInputBoxProps {
   sendANewMessage: (message: Message | CreateMessage) => void | Promise<void>;
+  setTranscript: (transcript: string) => void;
   isLoading?: boolean;
   latestMessage?: Message | null;
   completedSpeaking?: boolean;
@@ -19,6 +20,7 @@ const ChatInputBox = ({
   isLoading,
   latestMessage,
   completedSpeaking,
+  setTranscript,
 }: ChatInputBoxProps) => {
   const [newMessage, setNewMessage] = React.useState('');
   const { transcript, finalTranscript, resetTranscript, listening } =
@@ -54,6 +56,9 @@ const ChatInputBox = ({
     },
     [newMessage, sendANewMessage],
   );
+  React.useEffect(() => {
+    setTranscript(transcript);
+  }, [transcript, setTranscript]);
 
   React.useEffect(() => {
     if (finalTranscript) {
@@ -95,6 +100,7 @@ const ChatInputBox = ({
           onChange={(value) => setNewMessage(String(value))}
           send={doSendMessage}
         />
+
         <button
           type="button"
           disabled={!newMessage || newMessage.length === 0}

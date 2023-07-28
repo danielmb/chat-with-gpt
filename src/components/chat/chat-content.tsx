@@ -8,6 +8,7 @@ import { FaUser } from 'react-icons/fa';
 
 interface ChatContentProps {
   messages: Message[];
+  transcript?: string;
 }
 const intlDateTime = new Intl.DateTimeFormat('no-NO', {
   hour: 'numeric',
@@ -19,7 +20,7 @@ const intlDate = new Intl.DateTimeFormat('no-NO', {
   month: 'numeric',
   day: 'numeric',
 });
-const ChatContent = ({ messages }: ChatContentProps) => {
+const ChatContent = ({ messages, transcript }: ChatContentProps) => {
   // scroll to the bottom of the chat on load
   const latestChatRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -60,6 +61,17 @@ const ChatContent = ({ messages }: ChatContentProps) => {
           </div>
         );
       })}
+      {transcript && transcript.length > 0 && (
+        <div className="py-2 flex flex-row w-full justify-end">
+          <div className="px-2 w-fit py-3 flex flex-col rounded-lg text-white order-1 mr-2 bg-blue-500">
+            <span className="text-xs text-gray-200">
+              Transcript&nbsp;-&nbsp;
+              {intlDate.format(Date.now())}&nbsp;
+            </span>
+            <span className="text-md">{transcript}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
